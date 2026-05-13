@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # =========================
 # 👤 Usuario 
 # =========================
-class User(AbstractUser):
+class Usuario(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     is_seller = models.BooleanField(default=False)
 
@@ -37,7 +37,7 @@ class Receta(models.Model):
 
 
     owner = models.ForeignKey(
-        User,
+        Usuario,
         on_delete=models.CASCADE,
         related_name='receta'
     )  # 1:N
@@ -60,7 +60,7 @@ class Favorito(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     user = models.ForeignKey(
-        User,
+        Usuario,
         on_delete=models.CASCADE,
         related_name='favoritos'
     )  # 1:N
@@ -80,7 +80,7 @@ class Favorito(models.Model):
 # =========================
 # 🧾 tabla de recetas (tabla de favoritos)
 # =========================
-class CartItem(models.Model):
+class recetaF(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     favoritos = models.ForeignKey(Favorito, on_delete=models.CASCADE)
