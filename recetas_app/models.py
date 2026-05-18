@@ -64,7 +64,6 @@ class Favorito(models.Model):
         related_name='favoritos'
     )
 
-
     products = models.ManyToManyField(
         Receta,
         through='recetaF', 
@@ -74,7 +73,7 @@ class Favorito(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"favoritos {self.id} - {self.user}"
+        return f"Lista de {self.user.username}"
 
 
 # =========================
@@ -83,11 +82,13 @@ class Favorito(models.Model):
 class recetaF(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    favoritos = models.ForeignKey(Favorito, on_delete=models.CASCADE)
+    # CORRECCIÓN: Se añade la relación que faltaba hacia Favorito
+    favorito = models.ForeignKey(Favorito, on_delete=models.CASCADE)
     recetas = models.ForeignKey(Receta, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('favoritos', 'recetas')
+        # CORRECCIÓN: Se añade la coma al final y ambos campos para que sea una tupla válida
+        unique_together = ('favorito', 'recetas',)
 
     def __str__(self):
         return f"{self.recetas}"
