@@ -14,7 +14,7 @@ class Usuario(AbstractUser):
 
 
 # =========================
-# 🏷️ Categoría "´pais dificultad etc."
+# 🏷️ Categoría
 # =========================
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -35,17 +35,16 @@ class Receta(models.Model):
     dificultad = models.TextField()
     ingredientes = models.TextField()
 
-
     owner = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
         related_name='receta'
-    )  # 1:N
+    )
 
     categories = models.ManyToManyField(
         Category,
         related_name='receta'
-    )  # N:M
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -63,11 +62,12 @@ class Favorito(models.Model):
         Usuario,
         on_delete=models.CASCADE,
         related_name='favoritos'
-    )  # 1:N
+    )
 
+    # CORRECCIÓN: Cambiado 'guardados' por 'recetaF' que es tu modelo real
     products = models.ManyToManyField(
         Receta,
-        through='guardados',
+        through='recetaF', 
         related_name='favoritos'
     )
 
@@ -78,7 +78,7 @@ class Favorito(models.Model):
 
 
 # =========================
-# 🧾 tabla de recetas (tabla de favoritos)
+# 🧾 Tabla intermedia (recetaF)
 # =========================
 class recetaF(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -86,11 +86,8 @@ class recetaF(models.Model):
     favoritos = models.ForeignKey(Favorito, on_delete=models.CASCADE)
     recetas = models.ForeignKey(Receta, on_delete=models.CASCADE)
 
-
-
     class Meta:
         unique_together = ('favoritos', 'recetas')
 
     def __str__(self):
-        return f"{self.recetas} "
-    
+        return f"{self.recetas}"

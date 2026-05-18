@@ -109,6 +109,8 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+AUTH_USER_MODEL = 'recetas_app.Usuario'
+
 USE_TZ = True
 
 
