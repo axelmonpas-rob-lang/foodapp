@@ -64,7 +64,7 @@ class Favorito(models.Model):
         related_name='favoritos'
     )
 
-    # CORRECCIÓN: Cambiado 'guardados' por 'recetaF' que es tu modelo real
+
     products = models.ManyToManyField(
         Receta,
         through='recetaF', 

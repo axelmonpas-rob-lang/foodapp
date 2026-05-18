@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Receta)
 class ProductAdmin(admin.ModelAdmin):
     # CORRECCIÓN: Solo campos reales de Receta (eliminados price y stock)
-    list_display = ('name', 'dificultad', 'owner', 'created_at')
+    list_display = ('name', 'dificultad', 'propietario')
     list_filter = ('categories',)
     search_fields = ('name',)
 
@@ -34,5 +34,5 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(recetaF)
 class CartItemAdmin(admin.ModelAdmin):
-    # CORRECCIÓN: Usando los nombres exactos de los campos en recetaF
+
     list_display = ('favoritos', 'recetas')
