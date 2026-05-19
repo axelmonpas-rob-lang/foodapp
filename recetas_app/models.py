@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 # =========================
-# 👤 Usuario 
+# Usuario 
 # =========================
 class Usuario(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -14,7 +14,7 @@ class Usuario(AbstractUser):
 
 
 # =========================
-# 🏷️ Categoría
+# Categoría
 # =========================
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -26,7 +26,7 @@ class Category(models.Model):
 
 
 # =========================
-# 📦 Producto "recetas"
+# recetas
 # =========================
 class Receta(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -53,7 +53,7 @@ class Receta(models.Model):
 
 
 # =========================
-# 🛒 Favoritos "recetas guardadas"
+# recetas guardadas
 # =========================
 class Favorito(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -77,7 +77,7 @@ class Favorito(models.Model):
 
 
 # =========================
-# 🧾 Tabla intermedia (recetaF)
+#Tabla intermedia (recetaF)
 # =========================
 class recetaF(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
