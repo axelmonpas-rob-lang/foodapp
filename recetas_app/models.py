@@ -1,4 +1,4 @@
-import uuid
+import uuid  # <-- CORREGIDO: Cambiado 'MODES import uuid' por 'import uuid'
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -16,7 +16,7 @@ class Usuario(AbstractUser):
 # =========================
 # Categoría
 # =========================
-class Category(models.Model):
+class Categorias(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -26,9 +26,9 @@ class Category(models.Model):
 
 
 # =========================
-# recetas
+# Recetas
 # =========================
-class Receta(models.Model):
+class Recetas(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=150)
     description = models.TextField()
@@ -42,7 +42,7 @@ class Receta(models.Model):
     )
 
     categories = models.ManyToManyField(
-        Category,
+        Categorias,
         related_name='receta'
     )
 
@@ -53,7 +53,7 @@ class Receta(models.Model):
 
 
 # =========================
-# recetas guardadas
+# Recetas Guardadas
 # =========================
 class Favorito(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -64,9 +64,10 @@ class Favorito(models.Model):
         related_name='favoritos'
     )
 
+    # CORRECCIÓN: Apunta exactamente a 'RecetaF'
     products = models.ManyToManyField(
-        Receta,
-        through='recetaF', 
+        Recetas,
+        through='recetas_app.RecetaF', 
         related_name='favoritos'
     )
 
@@ -77,17 +78,16 @@ class Favorito(models.Model):
 
 
 # =========================
-#Tabla intermedia (recetaF)
+# Tabla Intermedia
 # =========================
-class recetaF(models.Model):
+# CORRECCIÓN: Cambiado 'recetasf' a 'RecetaF' para que coincida con el through
+class RecetaF(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    # CORRECCIÓN: Se añade la relación que faltaba hacia Favorito
     favorito = models.ForeignKey(Favorito, on_delete=models.CASCADE)
-    recetas = models.ForeignKey(Receta, on_delete=models.CASCADE)
+    recetas = models.ForeignKey(Recetas, on_delete=models.CASCADE)
 
     class Meta:
-        # CORRECCIÓN: Se añade la coma al final y ambos campos para que sea una tupla válida
         unique_together = ('favorito', 'recetas',)
 
     def __str__(self):

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Usuario, Category, Receta, Favorito, recetaF
+# CORRECCIÓN: Importamos 'RecetaF' con las mayúsculas correctas
+from .models import Usuario, Categorias, Recetas, Favorito, RecetaF
 
 
 @admin.register(Usuario)
@@ -8,12 +9,12 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ('is_seller',)
 
 
-@admin.register(Category)
+@admin.register(Categorias)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
-@admin.register(Receta)
+@admin.register(Recetas)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'dificultad', 'owner', 'created_at')
     list_filter = ('categories',)
@@ -21,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CartItemInline(admin.TabularInline):
-    model = recetaF
+    model = RecetaF  # CORRECCIÓN: Cambiado a 'RecetaF'
     extra = 1
 
 
@@ -31,7 +32,6 @@ class CartAdmin(admin.ModelAdmin):
     inlines = [CartItemInline]
 
 
-@admin.register(recetaF)
+@admin.register(RecetaF)  # CORRECCIÓN: Cambiado a 'RecetaF'
 class CartItemAdmin(admin.ModelAdmin):
-    # CORRECCIÓN: Añadida la coma al final para que Python lo reconozca como tupla
     list_display = ('favorito', 'recetas',)
