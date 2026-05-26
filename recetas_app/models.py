@@ -34,6 +34,7 @@ class Recetas(models.Model):
     description = models.TextField()
     dificultad = models.TextField()
     ingredientes = models.TextField()
+    image = models.ImageField(upload_to='upload/', blank=True, null=True)
 
     owner = models.ForeignKey(
         Usuario,
