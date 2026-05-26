@@ -22,7 +22,7 @@
 
     {% for item in cart.recetaf_set.all %}
         <tr>
-            <td>{{ item.recetas.imagen }}</td>
+            <td><img src="{{ item.recetas.imagen.url }}" alt="{{ item.recetas.name }}" width="100"></td>
 
             <td>{{ item.recetas.name }}</td>
 
