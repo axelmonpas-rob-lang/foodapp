@@ -22,7 +22,7 @@
 
     {% for item in cart.recetaf_set.all %}
         <tr>
-            <td><img src="{{ item.recetas.imagen.url }}" alt="{{ item.recetas.name }}" width="100"></td>
+            <td><img src="{{ item.recetas.image.url }}" width="80" alt="Imagen de receta"></td>
 
             <td>{{ item.recetas.name }}</td>
 
@@ -50,7 +50,7 @@
 {% else %}
 
 <div class="alert alert-info">
-    Tu lista está vací
+    Tu lista está vacía
 </div>
 
 {% endif %}
