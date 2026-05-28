@@ -199,7 +199,7 @@ def remove_from_cart(request, item_id):
     item = get_object_or_404(
         RecetaF,
         id=item_id,
-        cart__user=request.user
+        favorito__user=request.user
     )
 
     item.delete()
@@ -208,23 +208,8 @@ def remove_from_cart(request, item_id):
 
 
 # =========================
-# 🔄 Actualizar cantidad
+# 🔍 Detalle del producto
 # =========================
-@login_required
-def update_cart_item(request, item_id):
-    item = get_object_or_404(
-        RecetaF,
-        id=item_id,
-        cart__user=request.user
-    )
-
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity'))
-
-        if quantity > 0:
-            item.quantity = quantity
-            item.save()
-        else:
-            item.delete()
-
-    return redirect('cart_detail')
+def product_detail(request, pk):
+    product = get_object_or_404(Recetas, pk=pk)
+    return render(request, 'recetas_app/product_detail.html', {'product': product})

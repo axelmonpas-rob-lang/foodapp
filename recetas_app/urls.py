@@ -7,6 +7,9 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
+    # Vista de Detalle de Receta 
+    path('products/<uuid:pk>/', views.product_detail, name='product_detail'),
+
     # Dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
 
@@ -19,5 +22,4 @@ urlpatterns = [
     path('cart/', views.cart_detail, name='cart_detail'),
     path('cart/add/<uuid:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/remove/<uuid:item_id>/', views.remove_from_cart, name='remove_from_cart'),
-    path('cart/update/<uuid:item_id>/', views.update_cart_item, name='update_cart_item'),
 ]

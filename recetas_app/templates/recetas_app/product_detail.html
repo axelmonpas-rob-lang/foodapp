@@ -1,0 +1,66 @@
+{% extends 'recetas_app/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="{% url 'home' %}" class="btn btn-light border-0 shadow-sm rounded-pill px-4">
+            Volver al inicio
+        </a>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-6 col-lg-5">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" alt="{{ product.name }}" style="max-height: 450px;">
+            {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center rounded-4 border" style="height: 400px;">
+                    <span class="text-muted">Sin imagen disponible</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6 col-lg-7">
+            <div class="mb-2">
+                {% for cat in product.categories.all %}
+                    <span class="badge rounded-pill bg-info text-dark px-3 py-2 opacity-75">{{ cat.name }}</span>
+                {% endfor %}
+            </div>
+            
+            <h1 class="fw-bold text-dark display-5 mb-2">{{ product.name }}</h1>
+            <p class="text-muted mb-4">Receta publicada por: <span class="text-dark fw-semibold">{{ product.owner.username }}</span></p>
+            
+            <hr class="my-4 opacity-25">
+
+            <div class="mb-4">
+                <h3 class="fw-bold text-dark mb-3">Ingredientes</h3>
+                <div class="p-4 bg-light rounded-4 border-0 shadow-sm">
+                    <p class="text-secondary mb-0" style="white-space: pre-line; line-height: 1.8;">
+                        {% if product.ingredientes %}
+                            {{ product.ingredientes }}
+                        {% else %}
+                            <i>No se especificaron ingredientes por separado.</i>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="fw-bold text-dark mb-3">Preparación / Descripción</h3>
+                <div class="p-4 bg-white rounded-4 border shadow-sm">
+                    <p class="text-secondary mb-0" style="white-space: pre-line; line-height: 1.8;">
+                        {{ product.description }}
+                    </p>
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="d-grid d-md-inline-block">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-dark rounded-pill px-5 py-2.5 shadow-sm">
+                        Agregar a favoritos
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
